@@ -1,0 +1,127 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This agent implements a small HTTP interface for scoring servers (i.e. CTFd Enterprise) to poll during a King of the Hill CTF.",
+        "title": "CTFd King of the Hill Agent",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/healthcheck": {
+            "get": {
+                "security": [
+                    {
+                        "AuthenticationToken": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show the current status of the server by running the stored command",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.HealthCheckResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Request did not provide a valid authentication token"
+                    },
+                    "403": {
+                        "description": "Request did not come from an IP within the whitelisted IP ranges"
+                    }
+                }
+            }
+        },
+        "/status": {
+            "get": {
+                "security": [
+                    {
+                        "AuthenticationToken": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show the current owner of the server that the agent is currently running on",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.StatusCheckResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Request did not provide a valid authentication token"
+                    },
+                    "403": {
+                        "description": "Request did not come from an IP within the whitelisted IP ranges"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.HealthCheckData": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer"
+                },
+                "stderr": {
+                    "type": "string"
+                },
+                "stdout": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.HealthCheckResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/main.HealthCheckData"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "main.StatusCheckData": {
+            "type": "object",
+            "properties": {
+                "identifier": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.StatusCheckResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/main.StatusCheckData"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "AuthenticationToken": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

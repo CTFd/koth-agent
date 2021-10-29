@@ -1,0 +1,81 @@
+definitions:
+  main.HealthCheckData:
+    properties:
+      status:
+        type: integer
+      stderr:
+        type: string
+      stdout:
+        type: string
+    type: object
+  main.HealthCheckResponse:
+    properties:
+      data:
+        $ref: '#/definitions/main.HealthCheckData'
+      success:
+        type: boolean
+    type: object
+  main.StatusCheckData:
+    properties:
+      identifier:
+        type: string
+    type: object
+  main.StatusCheckResponse:
+    properties:
+      data:
+        $ref: '#/definitions/main.StatusCheckData'
+      success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+  description: This agent implements a small HTTP interface for scoring servers (i.e.
+    CTFd Enterprise) to poll during a King of the Hill CTF.
+  license:
+    name: Apache 2.0
+  title: CTFd King of the Hill Agent
+  version: "1.0"
+paths:
+  /healthcheck:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.HealthCheckResponse'
+        "401":
+          description: Request did not provide a valid authentication token
+        "403":
+          description: Request did not come from an IP within the whitelisted IP ranges
+      security:
+      - AuthenticationToken: []
+      summary: Show the current status of the server by running the stored command
+  /status:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.StatusCheckResponse'
+        "401":
+          description: Request did not provide a valid authentication token
+        "403":
+          description: Request did not come from an IP within the whitelisted IP ranges
+      security:
+      - AuthenticationToken: []
+      summary: Show the current owner of the server that the agent is currently running
+        on
+securityDefinitions:
+  AuthenticationToken:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
