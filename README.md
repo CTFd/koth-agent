@@ -2,6 +2,8 @@
 
 KoTH Server Agent for use with CTFd Enterprise
 
+API docs: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
+
 ```
 ❯ ./agent -h
 Usage of ./agent:
