@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  example:
+    build: .
+    volumes:
+       - ./dist/agent.linux:/usr/bin/agent
+    ports:
+      - "5000:5000"
+      - "31337:31337"

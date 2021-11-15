@@ -30,3 +30,7 @@ Usage of ./agent:
   -port string
         port number to listen on (default "31337")
 ```
+
+## Example Application
+
+An example application that shows a basic idea of how to use this agent with a challenge is provided in the example folder. It can be started with `docker-compose up`.
