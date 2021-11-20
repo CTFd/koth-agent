@@ -5,6 +5,12 @@ all:
 	make unix
 	make windows
 
+binaries:
+	make linux
+	make darwin
+	make unix
+	make windows
+
 docs:
 	cd src && swag init
 	echo "$$(echo "<script>SWAGGER_JSON=$$(cat src/docs/swagger.json);</script>"; cat src/docs/index.orig.html)" > src/docs/index.html

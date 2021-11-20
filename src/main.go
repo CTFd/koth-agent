@@ -161,9 +161,6 @@ func status(w http.ResponseWriter, req *http.Request) {
 	var ident string
 	if OwnerCommand != "" {
 		stdout, stderr, exitCode := runCommand(OwnerCommand)
-		fmt.Println(stdout)
-		fmt.Println(stderr)
-		fmt.Println(exitCode)
 		success := (len(stderr) == 0) && (exitCode == 0)
 		if success == false {
 			resp := StatusCheckResponse{Success: false, Data: StatusCheckData{Identifier: ""}}
