@@ -52,6 +52,9 @@ var doc = `{
                     },
                     "403": {
                         "description": "Request did not come from an IP within the whitelisted IP ranges"
+                    },
+                    "500": {
+                        "description": "Command to health check did not run successfully"
                     }
                 }
             }
@@ -82,6 +85,9 @@ var doc = `{
                     },
                     "403": {
                         "description": "Request did not come from an IP within the whitelisted IP ranges"
+                    },
+                    "500": {
+                        "description": "Command to determine owner did not run successfully"
                     }
                 }
             }

@@ -52,13 +52,17 @@ var AuthenticationToken string
 // TargetFile : File that the agent will read for the server owner
 var TargetFile string
 
-// HealthCheckCommand : Command that the agent will run when the /healthcheck endpoint is hit
+// HealthCheckCommand : Command that the agent will run when the /healthcheck endpoint is hit to check health
 var HealthCheckCommand string
+
+// OwnerCommand : Command that the agent will run when the /status endpoint is hit to check ownership
+var OwnerCommand string
 
 var host string
 var port string
 var file string
-var cmd string
+var health_cmd string
+var owner_cmd string
 var origin string
 var keystring string
 var certstring string
@@ -69,7 +73,7 @@ var apikey string
 func runCommand(name string, args ...string) (stdout string, stderr string, exitCode int) {
 	// https://stackoverflow.com/a/40770011
 	var outbuf, errbuf bytes.Buffer
-	cmd := exec.Command(name, args...)
+	cmd := exec.Command("sh", "-c", name)
 	cmd.Stdout = &outbuf
 	cmd.Stderr = &errbuf
 
@@ -138,6 +142,7 @@ func authorizeRequestIP(req *http.Request) bool {
 // @Success 200 {object} StatusCheckResponse
 // @Success 401 "Request did not provide a valid authentication token"
 // @Success 403 "Request did not come from an IP within the whitelisted IP ranges"
+// @Failure 500 "Command to determine owner did not run successfully"
 // @Router /status [get]
 func status(w http.ResponseWriter, req *http.Request) {
 	validIP := authorizeRequestIP(req)
@@ -153,9 +158,27 @@ func status(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	f, _ := ioutil.ReadFile(TargetFile)
-	identifier := strings.TrimSpace(string(f))
-	resp := StatusCheckResponse{Success: true, Data: StatusCheckData{Identifier: identifier}}
+	var ident string
+	if OwnerCommand != "" {
+		stdout, stderr, exitCode := runCommand(OwnerCommand)
+		fmt.Println(stdout)
+		fmt.Println(stderr)
+		fmt.Println(exitCode)
+		success := (len(stderr) == 0) && (exitCode == 0)
+		if success == false {
+			resp := StatusCheckResponse{Success: false, Data: StatusCheckData{Identifier: ""}}
+			j, _ := json.Marshal(resp)
+			w.WriteHeader(500)
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(j)
+			return
+		}
+		ident = stdout
+	} else {
+		f, _ := ioutil.ReadFile(TargetFile)
+		ident = strings.TrimSpace(string(f))
+	}
+	resp := StatusCheckResponse{Success: true, Data: StatusCheckData{Identifier: ident}}
 	j, _ := json.Marshal(resp)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(j)
@@ -169,6 +192,7 @@ func status(w http.ResponseWriter, req *http.Request) {
 // @Success 200 {object} HealthCheckResponse
 // @Success 401 "Request did not provide a valid authentication token"
 // @Success 403 "Request did not come from an IP within the whitelisted IP ranges"
+// @Success 500 "Command to health check did not run successfully"
 // @Router /healthcheck [get]
 func healthcheck(w http.ResponseWriter, req *http.Request) {
 	validIP := authorizeRequestIP(req)
@@ -186,6 +210,15 @@ func healthcheck(w http.ResponseWriter, req *http.Request) {
 
 	stdout, stderr, exitCode := runCommand(HealthCheckCommand)
 	success := (len(stderr) == 0) && (exitCode == 0)
+
+	if success == false {
+		resp := HealthCheckResponse{Success: false, Data: HealthCheckData{Stdout: stdout, Stderr: stderr, Status: exitCode}}
+		j, _ := json.Marshal(resp)
+		w.WriteHeader(500)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(j)
+		return
+	}
 
 	resp := HealthCheckResponse{Success: success, Data: HealthCheckData{Stdout: stdout, Stderr: stderr, Status: exitCode}}
 	j, _ := json.Marshal(resp)
@@ -214,8 +247,12 @@ func main() {
 		flag.StringVar(&file, "file", "owner.txt", "text file to watch for server ownership changes")
 	}
 
-	if cmd == "" {
-		flag.StringVar(&cmd, "cmd", "true", "command to run when asked for a healthcheck")
+	if health_cmd == "" {
+		flag.StringVar(&health_cmd, "health-cmd", "true", "command to run when asked for a healthcheck")
+	}
+
+	if owner_cmd == "" {
+		flag.StringVar(&owner_cmd, "owner-cmd", "", "command to run when asked for an owner")
 	}
 
 	if origin == "" {
@@ -259,7 +296,8 @@ func main() {
 
 	AuthenticationToken = apikey
 	TargetFile = file
-	HealthCheckCommand = cmd
+	HealthCheckCommand = health_cmd
+	OwnerCommand = owner_cmd
 	rawPort, _ := strconv.Atoi(port)
 
 	addr := fmt.Sprintf("%s:%d", host, rawPort)
