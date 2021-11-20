@@ -13,10 +13,10 @@ Usage of ./agent:
         SSL certificate file
   -certstring string
         SSL cert as a string
-  -cmd string
-        command to run when asked for a healthcheck (default "true")
   -file string
         text file to watch for server ownership changes (default "owner.txt")
+  -health-cmd string
+        command to run when asked for a healthcheck (default "true")
   -help
         print help text
   -host string
@@ -27,6 +27,8 @@ Usage of ./agent:
         SSL key as a string
   -origin string
         CIDR ranges to allow connections from. IPv4 and IPv6 networks must be specified seperately (default "0.0.0.0/0,::/0")
+  -owner-cmd string
+        command to run when asked for an owner
   -port string
         port number to listen on (default "31337")
 ```
