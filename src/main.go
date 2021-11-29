@@ -172,7 +172,10 @@ func status(w http.ResponseWriter, req *http.Request) {
 		}
 		ident = stdout
 	} else {
-		f, _ := ioutil.ReadFile(TargetFile)
+		f, err := ioutil.ReadFile(TargetFile)
+		if err != nil {
+			log.Fatal(err)
+		}
 		ident = strings.TrimSpace(string(f))
 	}
 	resp := StatusCheckResponse{Success: true, Data: StatusCheckData{Identifier: ident}}
