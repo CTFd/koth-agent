@@ -12,7 +12,7 @@ binaries:
 	make windows
 
 docs:
-	cd src && swag init
+	cd src && ~/go/bin/swag init
 	echo "$$(echo "<script>SWAGGER_JSON=$$(cat src/docs/swagger.json);</script>"; cat src/docs/index.orig.html)" > src/docs/index.html
 	mkdir -p dist/docs
 	cp src/docs/index.html dist/docs
