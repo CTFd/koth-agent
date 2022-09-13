@@ -43,6 +43,8 @@ type HealthCheckResponse struct {
 	Data    HealthCheckData `json:"data"`
 }
 
+var VERSION = "1.1.0"
+
 // AllowedOrigins : List of CIDR ranges that are allowed to access the agent
 var AllowedOrigins []net.IPNet
 
@@ -279,8 +281,15 @@ func main() {
 		flag.StringVar(&apikey, "apikey", "", "API Key to authenticate with")
 	}
 
-	help := flag.Bool("help", false, "print help text")
+	version := flag.Bool("version", false, "Print current version")
+	help := flag.Bool("help", false, "Print help text")
 	flag.Parse()
+
+	var Version = *version
+	if Version {
+		fmt.Println(VERSION)
+		return
+	}
 
 	var Help = *help
 	if Help {
