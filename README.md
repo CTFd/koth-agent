@@ -37,6 +37,9 @@ curl http://localhost:31337/status --header "authorization:123"
 {"success":true,"data":{"identifier":"example"}}
 ```
 
+For more information about the agent's API, you can refer to this article: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
+
+
 ### Agent CLI Usage
 ```
 ❯ ./agent -h
@@ -76,8 +79,6 @@ Run the web application together with the agent using `docker-compose up` in the
 Once the Docker instance is running, you can interact with the agent and example web application.
 
 The web application can be accessed in `http://<server ip address>:5000/`. And the agent can be accessed from two endpoints: `/status` and `/healthcheck`. For example, `http://<server ip address>:31337/status` and `http://<server ip address>:31337/healthcheck`.
-
-For more information about the agent's API, you can refer to this article: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
 
 Try entering a text on the web application's input and submit it.
 
