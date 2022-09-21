@@ -23,10 +23,18 @@ You can use the executables found in the `/dist` folder, or you can modify and r
 
 You can then run the agent using its available [options](#agent-cli-usage).
 
-For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file. And to use the API key indicated to make sure not all requests will get any information that isn't supposed to be seen by unauthorized users.
+For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file (this is assuming that the owner.txt file is present in the current working directory, and contains the text "example"). And to use the API key indicated to make sure not all requests will get any information that isn't supposed to be seen by unauthorized users. 
 
 ```
-./agent -file ../example/owner.txt -apikey 123 
+./agent -file owner.txt -apikey 123
+Listening on 0.0.0.0:31337
+Running without encryption
+```
+Since the current terminal is being used, open a separate one and send a request to the agent in the `/status` endpoint using cURL or your browser.
+
+```
+curl http://localhost:31337/status --header "authorization:123"
+{"success":true,"data":{"identifier":"example"}}
 ```
 
 ### Agent CLI Usage
