@@ -36,3 +36,49 @@ Usage of ./agent:
 ## Example Application
 
 An example application that shows a basic idea of how to use this agent with a challenge is provided in the example folder. It can be started with `docker-compose up`.
+
+---
+# KoTH Agent Server
+
+- What your application does,
+- Why you used the technologies you used
+
+The KoTH Agent Server is an open-source agent to use with CTFd Enterprise, King of the Hill (KoTH) challenges.
+
+It is setup to run run alongside the KoTH Challenge Type and its target server/application. 
+
+The agent monitors the target server/application for the current "King of the Hill" and simultaneously listens and responds to HTTP requests.
+
+To learn more about King of the Hill challenges, [check out its documentation right here](https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill).
+
+# How to install and run the agent
+
+
+
+
+
+# How to use the agent
+
+
+
+
+
+
+
+---
+  
+
+by default, the agent is configured to look at the `owner.txt` file. You can view the code by examining the serve.sh file in the example applicaton. 
+
+koth agent on same server and tell it to read the `owner.txt` file. Something like `./agent -file owner.txt`. 
+
+```shell title="/example/serve.sh"
+#!/bin/sh
+agent -file /opt/app/owner.txt &
+python /opt/app/app.py
+
+
+
+API docs: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
+
+```
