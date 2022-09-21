@@ -1,38 +1,12 @@
-# koth-agent
+# KoTH Agent Server
 
-KoTH Server Agent for use with CTFd Enterprise
+- What your application does,
+- Why you used the technologies you used
 
-API docs: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
+The KoTH Agent Server is an open-source agent to use with CTFd Enterprise, King of the Hill (KoTH) challenges.
 
-```
-❯ ./agent -h
-Usage of ./agent:
-  -apikey string
-        API Key to authenticate with
-  -certfile string
-        SSL certificate file
-  -certstring string
-        SSL cert as a string
-  -file string
-        text file to watch for server ownership changes (default "owner.txt")
-  -health-cmd string
-        command to run when asked for a healthcheck (default "true")
-  -help
-        print help text
-  -host string
-        host address to listen on (default "0.0.0.0")
-  -keyfile string
-        SSL key file
-  -keystring string
-        SSL key as a string
-  -origin string
-        CIDR ranges to allow connections from. IPv4 and IPv6 networks must be specified seperately (default "0.0.0.0/0,::/0")
-  -owner-cmd string
-        command to run when asked for an owner
-  -port string
-        port number to listen on (default "31337")
-```
+It is setup to run run alongside the KoTH Challenge Type and its target server/application. 
 
-## Example Application
+The agent monitors the target server/application for the current "King of the Hill" and simultaneously listens and responds to HTTP requests.
 
-An example application that shows a basic idea of how to use this agent with a challenge is provided in the example folder. It can be started with `docker-compose up`.
+To learn more about King of the Hill challenges, [check out its documentation right here](https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill).
