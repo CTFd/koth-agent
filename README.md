@@ -13,7 +13,7 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 
 This repository is setup to run an example web application along with the KoTH Agent Server. Essentially, the only file reponsible for running the agent are its executables located in the `/dist` folder, which are all compiled for different OS's (operating systems).
 
-The agent is built with the [Go](https://go.dev/) programming language. Its source code is located in `/src/main.go`.
+The agent is built with the [Go](https://go.dev/) programming language, and its source code is located in `/src/main.go`.
 
 The `/example` folder contains the files for the example web application used to demonstrate how the agent interacts with it, [as shown here](#example-application)
 
