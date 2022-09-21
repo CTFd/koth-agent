@@ -69,11 +69,9 @@ Usage of ./agent:
 
 ### Example Application
 
-To get a sense of how the agent works, an example application is provided in the repository in the `/example` folder. 
+To get a sense of how the agent works, an example application is provided in the repository in the `/example` folder. It is a simple web application, built with [Flask](https://flask.palletsprojects.com/en/2.2.x/), that serves as the agent's target application for it to monitor. It takes in the user's identifier or any text, and writes it to a file called `owner.txt`.
 
-This simple web application, built with [Flask](https://flask.palletsprojects.com/en/2.2.x/), serves as the agent's target application for it to monitor. It is a website that takes in the user's identifier or any text, and writes it to a file called `owner.txt`.
-
-It can be started with `docker-compose up`.
+Run the web application together with the agent using `docker-compose up` in the root directory of the repository.
 
 Once the Docker instance is running, you can interact with the agent and example web application.
 
