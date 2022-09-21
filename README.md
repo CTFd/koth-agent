@@ -21,8 +21,15 @@ The `/example` folder contains the files for the example web application used to
 
 You can use the executables found in the `/dist` folder, or you can modify and recompile the agent's source code into an executable file using `go build`. This compiles it into a file named, `src.exe`. After such, rename the recompiled file to `agent.exe`.
 
-You can then run the agent using its available options below:
+You can then run the agent using its available [options](#agent-cli-usage).
 
+For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file. And to use the API key indicated to make sure not all requests will get any information that isn't supposed to be seen by unauthorized users.
+
+```
+./agent -file ../example/owner.txt -apikey 123 
+```
+
+### Agent CLI Usage
 ```
 ❯ ./agent -h
 Usage of ./agent:
