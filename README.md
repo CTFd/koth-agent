@@ -19,7 +19,7 @@ The `/example` folder contains the files for the example web application used to
 
 ## How to use the agent
 
-You can use the executables found in the `/dist` folder, or you can modify and recompile the agent's source code into an executable file using `go build`. This compiles it into a file named, `src.exe`. After such, rename recompiled file to `agent.exe`.
+You can use the executables found in the `/dist` folder, or you can modify and recompile the agent's source code into an executable file using `go build`. This compiles it into a file named, `src.exe`. After such, rename the recompiled file to `agent.exe`.
 
 You can then run the agent using its available options below:
 
