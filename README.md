@@ -11,26 +11,29 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 
 ## File structure
 
-This repository is setup to run an example web application along with the KoTH Agent Server. Essentially, the only file reponsible for running the agent are its executables located in the `/dist` folder, which are all compiled for different OS's (operating systems).
+This repository is contains the KoTH Agent Server source code and binaries as well as and example web application to show the interaction between the agent and a target server. 
 
-The agent is built with the [Go](https://go.dev/) programming language, and its source code is located in `/src/main.go`.
-
-The `/example` folder contains the files for the example web application used to demonstrate how the agent interacts with it, [as shown here](#example-application)
+The `dist` folder contains compiled agents for different operating systems.
+The `src` folder contains the source code for the agent.
+The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application)
 
 ## How to use the agent
 
-You can use the executables found in the `/dist` folder, or you can modify and recompile the agent's source code into an executable file using `go build`. This compiles it into a file named, `src.exe`. After such, rename the recompiled file to `agent.exe`.
+You can use the executables found in the `/dist` folder, or you can modify and recompile the agent's source code into an executable file using `go build`. 
 
 You can then run the agent using its available [options](#agent-cli-usage).
 
-For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file (this is assuming that the owner.txt file is present in the current working directory, and contains the text "example"). And to use the API key indicated to make sure not all requests will get any information that isn't supposed to be seen by unauthorized users. 
+For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example"). 
+
+In addition we specify an API key to prevent unauthorized users from accessing the agent. 
 
 ```
 ./agent -file owner.txt -apikey 123
 Listening on 0.0.0.0:31337
 Running without encryption
 ```
-Since the current terminal is being used, open a separate one and send a request to the agent in the `/status` endpoint using cURL or your browser.
+
+We can then access the the `/status` endpoint using cURL or your browser to see the current "owner" of the target application.
 
 ```
 curl http://localhost:31337/status --header "authorization:123"
@@ -72,14 +75,14 @@ Usage of ./agent:
 
 ### Example Application
 
-To get a sense of how the agent works, an example application is provided in the repository in the `/example` folder. It is a simple web application, built with [Flask](https://flask.palletsprojects.com/en/2.2.x/), that serves as the agent's target application for it to monitor. It takes in the user's identifier or any text, and writes it to a file called `owner.txt`.
+To get a sense of how the agent works, an example application is provided in the repository in the `/example` folder. It is a simple web application, built with [Flask](https://flask.palletsprojects.com/), that serves as the agent's target application for it to monitor. It takes in the user's identifier or any text, and writes it to a file called `owner.txt`.
 
 Run the web application together with the agent using `docker-compose up` in the root directory of the repository.
 
 Once the Docker instance is running, you can interact with the agent and example web application.
 
-The web application can be accessed in `http://<server ip address>:5000/`. And the agent can be accessed from two endpoints: `/status` and `/healthcheck`. For example, `http://<server ip address>:31337/status` and `http://<server ip address>:31337/healthcheck`.
+The web application can be accessed in `http://[server]:5000/`. And the agent can be accessed from two endpoints: `/status` and `/healthcheck`. For example, `http://[server]:31337/status` and `http://[server]:31337/healthcheck`.
 
-Try entering a text on the web application's input and submit it.
+Try entering text on the web application's input and submit it.
 
 Then, send a request to the agent via the `/status` endpoint. The agent responds in JSON format, where, the identifier key's value would be the text submitted from the web application.
