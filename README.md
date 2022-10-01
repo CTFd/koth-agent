@@ -15,7 +15,7 @@ This repository is contains the KoTH Agent Server source code and binaries as we
 
 - The `dist` folder contains compiled agents for different operating systems.
 - The `src` folder contains the source code for the agent.
-- The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application)
+- The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application).
 
 ## How to use the agent
 
@@ -25,7 +25,7 @@ You can then run the agent using its available [options](#agent-cli-usage).
 
 For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example"). 
 
-In addition we specify an API key to prevent unauthorized users from accessing the agent. 
+In addition, we specify an API key to prevent unauthorized users from accessing the agent. 
 
 ```
 ./agent -file owner.txt -apikey 123
@@ -86,3 +86,5 @@ The web application can be accessed in `http://[server]:5000/`. And the agent ca
 Try entering text on the web application's input and submit it.
 
 Then, send a request to the agent via the `/status` endpoint. The agent responds in JSON format, where, the identifier key's value would be the text submitted from the web application.
+
+Here's the [full tutorial](https://docs.ctfd.io/tutorials/challenges/creating-koth-challenges) on how to up King of the Hill challenges using the example application.
