@@ -13,9 +13,9 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 
 This repository contains the KoTH Agent Server, source code and binaries as well as an example web application to show the interaction between the agent and a target server. 
 
-- The `dist` folder contains compiled agents for different operating systems.
-- The `src` folder contains the source code for the agent.
-- The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application).
+- `dist` folder contains compiled agents for different operating systems.
+- `src` folder contains the source code for the agent.
+- `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application).
 
 ## How to use the agent
 
@@ -47,8 +47,6 @@ curl https://localhost:31337/status --cacert example.com.crt --header "Authoriza
 For more information about the agent's API, you can refer to this article: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
 
 ### Agent CLI Usage
-
-Running the agent with the `-h` flag shows the following options:
 
 ```
 ❯ ./agent -h
@@ -94,7 +92,7 @@ Running the example script below will generate two files: `example.com.crt` and 
 $ ./certify.py example.com IP:127.0.0.1 DNS:localhost [www.example.com] [mail.example.com] [...]
 ```
 
-### Example Application
+## Example Application
 
 To get a sense of how the agent works, an example application is provided in the repository in the `/example` folder. It is a simple web application, built with [Flask](https://flask.palletsprojects.com/), that serves as the agent's target application for it to monitor. It takes in the user's identifier or any text, and writes it to a file called `owner.txt`.
 
