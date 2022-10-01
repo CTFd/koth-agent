@@ -11,7 +11,7 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 
 ## File structure
 
-This repository is contains the KoTH Agent Server source code and binaries as well as and example web application to show the interaction between the agent and a target server. 
+This repository contains the KoTH Agent Server, source code and binaries as well as an example web application to show the interaction between the agent and a target server. 
 
 - The `dist` folder contains compiled agents for different operating systems.
 - The `src` folder contains the source code for the agent.
@@ -23,27 +23,33 @@ You can use the executables found in the `/dist` folder, or you can modify and r
 
 You can then run the agent using its available [options](#agent-cli-usage).
 
-For example, running the following code below, with the options indicated, tells the agent to monitor the `owner.txt` file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example"). 
-
-In addition, we specify an API key to prevent unauthorized users from accessing the agent. 
+For example, running the following code below, with the options indicated, tells the agent to:
+- monitor the content of the owner.txt file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example");
+- add an API key, to prevent unauthorized users from accessing the agent;
+- an SSL certificate, to encrypt the data; and
+- the SSL key (to generate self-signed SSL certificates, refer [here](#generating-self-signed-ssl-certificates)) 
 
 ```
-./agent -file owner.txt -apikey 123
+./agent -file owner.txt -apikey 123 -certfile /tools/certify/example.com.crt -keyfile /tools/certify/example.com.key
+
 Listening on 0.0.0.0:31337
-Running without encryption
+Running with encryption certificates from filesystem
 ```
 
-We can then access the the `/status` endpoint using cURL or your browser to see the current "owner" of the target application.
+We can then access the the `/status` or `/healthcheck` endpoint using cURL with a copy of the SSL certificate, `example.com.crt`.
 
 ```
-curl http://localhost:31337/status --header "authorization:123"
+curl https://localhost:31337/status --cacert example.com.crt --header "Authorization:123"
+
 {"success":true,"data":{"identifier":"example"}}
 ```
 
 For more information about the agent's API, you can refer to this article: https://docs.ctfd.io/docs/custom-challenges/king-of-the-hill/redoc
 
-
 ### Agent CLI Usage
+
+Running the agent with the `-h` flag shows the following options:
+
 ```
 ❯ ./agent -h
 Usage of ./agent:
@@ -71,6 +77,21 @@ Usage of ./agent:
         command to run when asked for an owner
   -port string
         port number to listen on (default "31337")
+```
+
+### Generating Self-signed SSL Certificates
+
+You can further secure the connection via encryption when communicating with the KoTH Agent. The repository provides a Python script that will generate a self-signed SSL certificate using [OpenSSL](https://www.openssl.org/).
+
+It is located in `/tools/certify/certify.py`.
+
+The script creates and self-signs X.509 SSL/TLS certificates with the "subjectAltName" extension. Which allows for the specification of IP addresses as well as domain names.
+
+Running the example script below will generate two files: `example.com.crt` and `example.com.key`.
+
+#### Usage
+```
+$ ./certify.py example.com IP:127.0.0.1 DNS:localhost [www.example.com] [mail.example.com] [...]
 ```
 
 ### Example Application
