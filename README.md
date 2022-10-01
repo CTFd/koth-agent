@@ -14,8 +14,9 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 This repository contains the KoTH Agent Server, source code, and binaries, as well as an example web application to show the interaction between the agent and a target server. 
 
 - `dist` folder contains compiled agents for different operating systems
-- `src` folder contains the source code for the agent
 - `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application)
+- `src` folder contains the source code for the agent
+- `/tools/certify/` folder contains a Python script to [generate self-signed SSL certificates](#generating-self-signed-ssl-certificates)
 
 ## How to use the agent
 
@@ -27,7 +28,7 @@ For example, running the following code below, with the options indicated, tells
 - monitor the content of the owner.txt file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example");
 - add an API key, to prevent unauthorized users from accessing the agent;
 - an SSL certificate, to encrypt the data; and
-- the SSL key (to generate self-signed SSL certificates, refer [here](#generating-self-signed-ssl-certificates)) 
+- the SSL key
 
 ```
 ./agent -file owner.txt -apikey 123 -certfile /tools/certify/example.com.crt -keyfile /tools/certify/example.com.key
