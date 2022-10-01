@@ -13,9 +13,9 @@ To learn more about King of The Hill challenges, [check out its documentation ri
 
 This repository is contains the KoTH Agent Server source code and binaries as well as and example web application to show the interaction between the agent and a target server. 
 
-The `dist` folder contains compiled agents for different operating systems.
-The `src` folder contains the source code for the agent.
-The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application)
+- The `dist` folder contains compiled agents for different operating systems.
+- The `src` folder contains the source code for the agent.
+- The `/example` folder contains the files for an example web application used to demonstrate how the agent interacts with other applications, [as shown here](#example-application)
 
 ## How to use the agent
 
