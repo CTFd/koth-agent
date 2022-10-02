@@ -24,11 +24,11 @@ You can use the executables found in the `/dist` folder, or you can modify and r
 
 You can then run the agent using its available [options](#agent-cli-usage).
 
-For example, running the following code below, with the options indicated, tells the agent to:
-- monitor the content of the owner.txt file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example");
-- add an API key, to prevent unauthorized users from accessing the agent;
-- an SSL certificate, to encrypt the data; and
-- the SSL key
+For example, running the command below, with the options indicated, tells the agent to:
+- monitor the content of the owner.txt file (assuming that the `owner.txt` file is present in the current working directory, and contains the text "example")
+- add an API key, to prevent unauthorized users from accessing the agent
+- add an SSL certificate, to encrypt the data
+- add the SSL key
 
 ```
 ./agent -file owner.txt -apikey 123 -certfile /tools/certify/example.com.crt -keyfile /tools/certify/example.com.key
@@ -88,7 +88,7 @@ The script creates and self-signs X.509 SSL/TLS certificates with the "subjectAl
 
 Running the example script below will generate two files: `example.com.crt` and `example.com.key`.
 
-#### Usage
+#### SSL Certificate Generator Usage
 ```
 $ ./certify.py example.com IP:127.0.0.1 DNS:localhost [www.example.com] [mail.example.com] [...]
 ```
@@ -107,4 +107,4 @@ Try entering text on the web application's input and submit it.
 
 Then, send a request to the agent via the `/status` endpoint. The agent responds in JSON format, where, the identifier key's value would be the text submitted from the web application.
 
-Here's the [full tutorial](https://docs.ctfd.io/tutorials/challenges/creating-koth-challenges) on how to up King of the Hill challenges using the example application.
+Here's a [full tutorial](https://docs.ctfd.io/tutorials/challenges/creating-koth-challenges) on how to setup King of the Hill challenges using the example application.
