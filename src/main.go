@@ -250,11 +250,11 @@ func main() {
 	}
 
 	if health_cmd == "" {
-		flag.StringVar(&health_cmd, "health-cmd", "true", "input command to run when asked for a healthcheck")
+		flag.StringVar(&health_cmd, "health-cmd", "true", "provide a command to run when asked for a healthcheck")
 	}
 
 	if owner_cmd == "" {
-		flag.StringVar(&owner_cmd, "owner-cmd", "", "input command to run when asked for an owner")
+		flag.StringVar(&owner_cmd, "owner-cmd", "", "provide a command to run when asked for an owner")
 	}
 
 	if origin == "" {
